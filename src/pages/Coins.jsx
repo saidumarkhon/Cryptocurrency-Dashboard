@@ -12,6 +12,7 @@ import {
 } from "flowbite-react";
 import { useCoins } from "../context/coinsSlice";
 import Subtitle from "../components/Subtitle";
+import TableSkeleton from '../components/TableSkeletonRow ';
 
 const customTheme = {
   root: {
@@ -135,9 +136,9 @@ export default function Cryptocurrencies() {
       <Subtitle subtitle='Cryptocurrency Prices by Market Cap'/>
       <SearchComponent onSearch={handleSearch} />
       {loading ? (
-        <div>LOADING...</div>
+        <TableSkeleton rows={10} /> 
       ) : (
-        <div className='max-w-full lg:max-w-[1140px] mx-auto mt-4'> {/* Responsive container */}
+        <div className='max-w-full lg:max-w-[1140px] mx-auto mt-4'> 
           <Table striped theme={customTheme}>
             <TableHead className="text-gray-900 normal-case">
               <TableHeadCell>Coin</TableHeadCell>
@@ -202,3 +203,4 @@ export default function Cryptocurrencies() {
     </div>
   );
 }
+

@@ -16,21 +16,25 @@ export default function HeroSection() {
   useEffect(() => {
     const fetchUpdatedCoins = async () => {
       const coinIds = selectedCoins.map(coin => coin.id).join(',');
+      if (coinIds.length === 0) {
+        setUpdatedSelectedCoins([]);
+        return;
+      }
       try {
         const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&ids=${coinIds}&order=market_cap_desc&per_page=100&page=1&sparkline=false`);
         if (!response.ok) {
           throw new Error('Failed to fetch updated coin data');
         }
         const updatedCoins = await response.json();
-        setUpdatedSelectedCoins(updatedCoins);
+        // Фильтруем монеты, чтобы включить только те, которые все еще в selectedCoins
+        const filteredCoins = updatedCoins.filter(coin => selectedCoins.some(selected => selected.id === coin.id));
+        setUpdatedSelectedCoins(filteredCoins);
       } catch (error) {
         console.error('Error fetching updated coin data:', error);
       }
     };
 
-    if (selectedCoins.length > 0) {
-      fetchUpdatedCoins();
-    }
+    fetchUpdatedCoins();
   }, [selectedCoins, currency]);
 
   const groupedCoins = updatedSelectedCoins.reduce((acc, coin, index) => {
