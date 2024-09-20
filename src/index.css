@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hero {
+  background-image: url("./assets/bg-sxemaa.jpg");
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  display: none;
+}
+body{
+  background-color: #15171B;
+}
