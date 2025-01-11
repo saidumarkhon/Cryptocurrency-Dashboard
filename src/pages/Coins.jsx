@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import HeroSection from "../components/HeroSection";
 import { CustomPagination } from "../components/Pagination"; 
 import { Link } from "react-router-dom";
-import { Eye } from "lucide-react"
+import { Eye } from "lucide-react";
 import SearchComponent from "../components/Search";
 import {
   Table,
@@ -12,7 +12,7 @@ import {
 } from "flowbite-react";
 import { useCoins } from "../context/coinsSlice";
 import Subtitle from "../components/Subtitle";
-import TableSkeleton from '../components/TableSkeletonRow ';
+import TableSkeleton from '../components/TableSkeletonRow';
 
 const customTheme = {
   root: {
@@ -50,6 +50,7 @@ export default function Cryptocurrencies() {
     unselectCoin,
     currency 
   } = useCoins();
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [searchQuery, setSearchQuery] = useState('');
@@ -135,6 +136,7 @@ export default function Cryptocurrencies() {
       <HeroSection />
       <Subtitle subtitle='Cryptocurrency Prices by Market Cap'/>
       <SearchComponent onSearch={handleSearch} />
+      
       {loading ? (
         <TableSkeleton rows={10} /> 
       ) : (
@@ -144,7 +146,8 @@ export default function Cryptocurrencies() {
               <TableHeadCell>Coin</TableHeadCell>
               <TableHeadCell>Price</TableHeadCell>
               <TableHeadCell>24h Change</TableHeadCell>
-              <TableHeadCell>Market Cap</TableHeadCell>
+              {/* Conditionally render Market Cap based on screen size */}
+              <TableHeadCell className="hidden sm:table-cell">Market Cap</TableHeadCell>
             </TableHead>
             <TableBody className='divide-y'>
               {currentCoins.map((coin) => {
@@ -182,7 +185,8 @@ export default function Cryptocurrencies() {
                         {coin.price_change_percentage_24h > 0 ? `+${coin.price_change_percentage_24h.toFixed(2)}` : `${coin.price_change_percentage_24h.toFixed(2)}`}% 
                       </p>
                     </Table.Cell>
-                    <Table.Cell>
+                    {/* Conditionally render Market Cap cell */}
+                    <Table.Cell className="hidden sm:table-cell">
                       <span className="text-gray-400 mr-1">{getCurrencySymbol(currency)}</span>
                       {coin.market_cap.toLocaleString()}
                     </Table.Cell>
@@ -203,4 +207,3 @@ export default function Cryptocurrencies() {
     </div>
   );
 }
-

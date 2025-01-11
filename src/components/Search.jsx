@@ -28,7 +28,7 @@ const customTheme = {
 
 const SearchComponent = ({ onSearch }) => {
   return (
-    <div className="max-w-[1140px] mx-auto mb-4">
+    <div className="max-w-[1140px] mx-auto mb-4 px-4 sm:px-6 lg:px-8">
       <TextInput
         theme={customTheme}
         id="search"
